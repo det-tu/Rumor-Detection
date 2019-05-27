@@ -10,3 +10,5 @@ model = word2vec.Word2Vec(sentences, hs=1,min_count=1,window=3,size=100)
 print(type(sentences))
 
 model.save("version1.model.bin")
+
+print(model.wv('天气'))
