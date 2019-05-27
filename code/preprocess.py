@@ -1,23 +1,45 @@
-from sklearn import model_selection, preprocessing, linear_model, naive_bayes, metrics, svm
-from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer, CountVectorizer
-from sklearn.feature_extraction import text
-from sklearn import decomposition, ensemble
-from sklearn.naive_bayes import MultinomialNB
-from keras import layers, models, optimizers
-from gensim.models import Word2Vec
+#!/usr/bin/python 
+# -*- coding: utf-8 -*-
 
-import pandas as pd
-import numpy as np
-import string, jieba, re, os, sys
-import logging
-
-# Extract content of truth
+import os
+import json
+import jieba
 
 
+dataPath = 'original-microblog/'
 
-# 多线程分词
-jieba.enable_parallel()
 
-# 停用词
-def getStopwords():
-    stopwords = []
+def allFileInfo(filepath):
+    infoList = []
+    pathDir =  os.listdir(filepath)
+    for fileDir in pathDir:
+        num = int(fileDir.split('_')[0])
+        if num>2600:
+            tag = 1
+        else:
+            tag = 0
+        # tag = 1 -> non-rumour
+        # tag = 0 -> rumour 
+        child = os.path.join('%s%s' % (filepath, fileDir))
+        infoList.append([child,tag])
+
+    return infoList
+
+
+def main():
+    infoList = allFileInfo(dataPath)
+
+    for fileInfo in infoList: # fileInfo[0]: filename, fileInfo[1]: fileTag
+        file = open(fileInfo[0], encoding='utf-8', mode='r')
+        data = file.read()
+        jsonObj = json.loads(data)
+        text = jsonObj['text']
+        
+        '''
+            ...
+        '''
+
+        file.close()
+
+
+main()
