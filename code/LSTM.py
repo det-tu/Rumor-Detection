@@ -1,10 +1,10 @@
+import torchvision
 import torch
 from torch.autograd import Variable
 
-
 class LSTM(torch.nn.Module):
 
-    def __init__(self, input_size, hidden_size, output_size, dropout = 1):
+    def __init__(self, input_size, hidden_size, output_size, dropout = 0.2):
         super(LSTM, self).__init__()
 
         self.hidden_size = hidden_size
@@ -12,14 +12,14 @@ class LSTM(torch.nn.Module):
             input_size=input_size,
             hidden_size=hidden_size,
             num_layers=1,
-            dropout=0,
+            dropout=0.2,
             bidirectional=False,
         )
         self.lstm2 = torch.nn.LSTM(
             input_size=hidden_size,
             hidden_size=hidden_size,
             num_layers=1,
-            dropout=1,
+            dropout=0.2,
             bidirectional=False,
         )
         self.fc1 = torch.nn.Linear(hidden_size, hidden_size)
@@ -39,7 +39,7 @@ class LSTM(torch.nn.Module):
         outputs, (ht, ct) = self.lstm2(out1, (h0, c0))
 
         out = outputs[-1]
-        out = self.fc1(out)
+        #out = self.fc1(out)
         out = self.relu(out)
         out = self.fc2(out)[0]
 

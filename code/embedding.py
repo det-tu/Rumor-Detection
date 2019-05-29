@@ -5,10 +5,11 @@ from gensim.models import Word2Vec
 pyplot.rcParams['font.sans-serif']=['SimHei']
 pyplot.rcParams['axes.unicode_minus'] = False
 
-model = Word2Vec.load("version1.model.bin")
+model = Word2Vec.load("version2.model.bin")
 X = model[model.wv.vocab]
 pca = PCA(n_components=2)
 result = pca.fit_transform(X)
+#print(model["天气"].size)
 
 # create a scatter plot of the projection
 pyplot.scatter(result[:, 0], result[:, 1])
